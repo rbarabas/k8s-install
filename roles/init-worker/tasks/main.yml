@@ -1,0 +1,4 @@
+---
+- include: facts.yml
+- include: setup.yml
+- include: k8s-config.yml

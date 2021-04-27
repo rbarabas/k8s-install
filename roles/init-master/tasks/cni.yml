@@ -1,0 +1,14 @@
+---
+- name: See if Calico is installed
+  failed_when: off
+  changed_when: off
+  shell:
+    cmd: kubectl get deployments.apps -n kube-system calico-kube-controllers
+  register: calico_deployment_check
+
+- debug: var=calico_deployment_check
+
+- name: Install Calico
+  shell:
+    cmd: kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
+  when: calico_deployment_check.rc != 0

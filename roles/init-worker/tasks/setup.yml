@@ -1,0 +1,21 @@
+---
+- name: Ensure kubeadm_init variable is visible
+  assert:
+    that:
+      - worker_init_cmd is defined
+
+- name: Check if worker is initialized
+  stat:
+    path: /etc/kubernetes/worker_init.log
+  register: worker_init_log
+
+- name: Initialize worker
+  shell:
+    cmd: "{{ worker_init_cmd }}"
+  when: not worker_init_log.stat.exists
+  register: worker_init
+
+- name: Create worker init log
+  shell:
+    cmd: echo -e "{{ worker_init.stdout }}" > /etc/kubernetes/worker_init.log
+  when: not worker_init_log.stat.exists

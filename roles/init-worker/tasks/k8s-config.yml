@@ -1,0 +1,6 @@
+---
+- name: Ensure cgroups is using systemd
+  lineinfile:
+    path: /var/lib/kubelet/config.yaml
+    regexp: '^cgroupDriver:.*'
+    line: 'cgroupDriver: systemd'

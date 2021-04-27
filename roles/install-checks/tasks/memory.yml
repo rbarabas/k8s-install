@@ -1,0 +1,5 @@
+---
+- name: Ensure 1900+ MB memory
+  assert:
+    that:
+      - ansible_memtotal_mb > 1900

@@ -1,0 +1,28 @@
+---
+- name: Ensure Docker systemd directory exists
+  file:
+    state: directory
+    path: /etc/systemd/system/docker.service.d
+
+- name: Ensure Docker config directory exists
+  file:
+    state: directory
+    path: /etc/docker
+
+- name: Setup Docker daemon config
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+  register: docker_daemon_config
+
+- name: Reload systemctl
+  systemd:
+    daemon_reload: yes
+  when: docker_daemon_config.changed
+
+- name: Enable Docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+

@@ -1,0 +1,4 @@
+---
+- include: facts.yml
+- include: k8s-repo.yml
+- include: k8s-pkgs.yml

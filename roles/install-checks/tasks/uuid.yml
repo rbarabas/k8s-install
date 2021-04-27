@@ -1,0 +1,7 @@
+- name: Unique UUID
+  shell:
+    cmd: cat /sys/class/dmi/id/product_uuid
+  register: host_uuid
+  changed_when: off
+
+- debug: var=host_uuid.stdout

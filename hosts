@@ -1,0 +1,11 @@
+[k8s:children]
+master
+workers
+
+[master]
+master1
+
+[workers]
+worker1
+worker2
+worker3

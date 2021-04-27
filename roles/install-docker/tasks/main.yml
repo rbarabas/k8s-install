@@ -1,0 +1,7 @@
+---
+- include: facts.yml
+- include: modules.yml
+- include: sysctl.yml
+- include: docker-repo.yml
+- include: docker-pkgs.yml
+- include: docker-conf.yml

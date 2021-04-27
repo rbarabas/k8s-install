@@ -1,0 +1,5 @@
+---
+- include: memory.yml
+- include: uuid.yml
+- include: swap.yml
+- include: iptables.yml

@@ -1,0 +1,6 @@
+---
+# Run installation checks
+- hosts: k8s
+  become: yes
+  roles:
+  - install-checks

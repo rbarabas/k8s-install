@@ -1,0 +1,21 @@
+---
+- name: Ensure lsb_release is installed
+  apt:
+    package: lsb-release
+    state: present
+
+- name: Obtain distribution shortname
+  changed_when: off
+  shell:
+    cmd: lsb_release -is | tr '[A-Z]' '[a-z]'
+  register: distrib_name
+
+- debug: var=distrib_name.stdout
+
+- name: Obtain distribution codename
+  changed_when: off
+  shell:
+    cmd: lsb_release -cs
+  register: distrib_codename
+
+- debug: var=distrib_codename.stdout

@@ -1,0 +1,12 @@
+---
+- name: Grab init command for workers
+  changed_when: off
+  shell:
+    cmd: grep 'kubeadm join' /etc/kubernetes/kubeadm_init.log
+  register: worker_init
+
+- name: Deletegate variable to dummy host
+  changed_when: off
+  add_host: 
+    name: storebox
+    worker_init_cmd: "{{ worker_init.stdout }}"

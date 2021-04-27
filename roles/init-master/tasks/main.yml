@@ -1,0 +1,6 @@
+---
+- include: init.yml
+- include: config.yml
+- include: cni.yml
+- include: worker.yml
+- include: k8s-config.yml

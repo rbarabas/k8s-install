@@ -1,0 +1,4 @@
+- name: Ensure swap is disabled
+  assert:
+    that:
+      - ansible_swaptotal_mb == 0

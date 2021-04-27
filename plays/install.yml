@@ -1,0 +1,7 @@
+---
+- hosts: k8s
+  become: yes
+  roles:
+  - prepare-os
+  - install-docker
+  - install-k8s

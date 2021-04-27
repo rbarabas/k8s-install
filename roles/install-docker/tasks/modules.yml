@@ -1,0 +1,6 @@
+---
+- name: Enable br_netfilter module
+  copy:
+    dest: /etc/modules-load.d/k8s.conf
+    content: |
+      br_netfilter

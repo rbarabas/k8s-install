@@ -1,0 +1,20 @@
+---
+- name: Install K8s Packages
+  apt:
+    package: 
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+    force: yes
+  register: k8s_packages
+
+- name: Lock K8s packages
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+      - kubelet
+      - kubeadm
+      - kubectl
+  when: k8s_packages.changed

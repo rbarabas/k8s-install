@@ -1,0 +1,13 @@
+---
+- name: Ensure Docker repository key is in the keyring
+  apt_key:
+    id: 7EA0A9C3F273FCD8
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/docker.gpg 
+
+- name: Enable Docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu {{ distrib_codename.stdout }} stable
+    state: present
+    filename: docker.list

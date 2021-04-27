@@ -1,0 +1,29 @@
+- name: Obtain iptables ruleset for INPUT
+  changed_when: off
+  shell:
+    cmd: iptables -S INPUT
+  register: iptables_input_rules
+
+- debug: var=iptables_input_rules.stdout
+
+- name: Obtain iptables policy for INPUT
+  changed_when: off
+  shell:
+    cmd: echo {{ iptables_input_rules.stdout }} | awk '{ if ($0 ~ /-P/){ print $NF }}'
+  register: iptables_input_policy
+
+- debug: var=iptables_input_policy.stdout
+
+- name: Calculate iptables rule count for INPUT
+  changed_when: off
+  shell:
+    cmd: echo {{ iptables_input_rules.stdout }} | wc -l
+  register: iptables_input_rule_count
+
+- debug: var=iptables_input_rule_count.stdout
+
+- name: Ensure iptables rule count is 1 (policy only)
+  assert:
+    that:
+      - iptables_input_policy.stdout == "ACCEPT"
+      - iptables_input_rule_count.stdout | int == 1

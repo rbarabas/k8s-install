@@ -1,0 +1,5 @@
+---
+- set_fact:
+    worker_init_cmd: "{{ hostvars['storebox'].worker_init_cmd }}"
+
+- debug: var=worker_init_cmd

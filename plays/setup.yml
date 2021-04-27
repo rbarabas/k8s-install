@@ -1,0 +1,12 @@
+---
+- name: Setup K8s Master
+  become: yes
+  hosts: master
+  roles:
+    - init-master
+
+- name: Setup K8s Workers
+  become: yes
+  hosts: workers
+  roles:
+    - init-worker

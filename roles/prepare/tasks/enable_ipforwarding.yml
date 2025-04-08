@@ -1,0 +1,23 @@
+- name: Check if IPv4 forwarding is enabled
+  changed_when: off
+  failed_when: off
+  shell:
+    cmd: sysctl net.ipv4.ip_forward | grep -c '1'
+  register: ip_forwarding
+
+- name: Enable IPv4 forwarding
+  shell:
+    cmd: sysctl -w net.ipv4.ip_forward=1
+  when: ip_forwarding.stdout | int == 0
+
+- name: Test if IPv6 forwarding is enabled
+  changed_when: off
+  failed_when: off
+  shell:
+    cmd: sysctl net.ipv6.conf.all.forwarding | grep -c '1'
+  register: ipv6_forwarding
+
+- name: Enable IPv6 forwarding
+  shell:
+    cmd: sysctl -w net.ipv6.conf.all.forwarding=1
+  when: ipv6_forwarding.stdout | int == 0

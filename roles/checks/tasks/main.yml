@@ -1,0 +1,24 @@
+---
+- include_tasks:
+    file: memory.yml
+    apply:
+      tags:
+        - install-checks
+
+- include_tasks:
+    file: uuid.yml
+    apply:
+      tags:
+        - install-checks
+
+- include_tasks:
+    file: swap.yml
+    apply:
+      tags:
+        - install-checks
+
+- include_tasks:
+    file: iptables.yml
+    apply:
+      tags:
+        - install-checks

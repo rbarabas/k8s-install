@@ -1,0 +1,14 @@
+- name: Check if 10.0.0.0/8 network is allowed
+  ansible.builtin.shell:
+    cmd: |
+      iptables -nL INPUT | grep 10.0.0.0/8 | wc -l
+  register: iptables_check
+  changed_when: false
+  failed_when: false
+
+- name: Enable 10.0.0.0/8 network in iptables
+  ansible.builtin.shell:
+    cmd: |
+      iptables -I INPUT -s 10.0.0.0/8 -j ACCEPT
+  register: iptables_policy
+  when: iptables_check.stdout == "0"

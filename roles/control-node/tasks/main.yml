@@ -1,0 +1,48 @@
+---
+- include_tasks:
+    file: kubeadm_init.yml
+    apply:
+      tags:
+        - init-control
+  tags:
+    - init-control
+
+- include_tasks:
+    file: setup_kubectl.yml
+    apply:
+      tags:
+        - init-control
+  tags:
+    - init-control
+
+- include_tasks:
+    file: cni.yml
+    apply:
+      tags:
+        - init-control
+        - join-control
+        - cni
+        - cilium
+  tags:
+    - init-control
+    - join-control
+    - cni
+    - cilium
+
+- include_tasks:
+    file: worker.yml
+    apply:
+      tags:
+        - init-control
+        - join-control
+  tags:
+    - init-control
+    - join-control
+# - include_tasks:
+#     file: cgroupdriver.yml
+#     apply:
+#       tags:
+#         - init-control
+#         - join-control
+#   tags:
+#     - init-control

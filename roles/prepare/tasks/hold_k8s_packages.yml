@@ -1,0 +1,9 @@
+- name: Install Kubernetes Packages
+  ansible.builtin.dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - kubelet
+    - kubectl
+    - kubeadm
+  when: ansible_distribution == "Ubuntu" and k8s_packages.changed

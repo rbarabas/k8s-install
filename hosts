@@ -1,11 +1,14 @@
 [k8s:children]
-master
-workers
+control
+worker
 
-[master]
-master1
+[control]
+ubuntu@129.153.90.209
+ubuntu@132.226.151.95
+ubuntu@137.131.47.132
 
-[workers]
-worker1
-worker2
-worker3
+[worker]
+#ubuntu@test-k8s-worker1.chocolate-kettle.ts.net
+#ubuntu@test-k8s-worker2.chocolate-kettle.ts.net
+#ubuntu@test-k8s-worker3.chocolate-kettle.ts.net
+

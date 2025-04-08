@@ -1,0 +1,31 @@
+---
+- name: Test k8s install state
+  failed_when: off
+  stat:
+    path: /etc/kubernetes/kubeadm_init.log
+  register: k8s_init_log
+
+- debug: var=k8s_init_log.stat
+
+- name: Initialize k8s cluster
+  shell:
+    cmd: |-
+      kubeadm init \
+        --pod-network-cidr=10.244.0.0/16 \
+        --service-cidr=172.16.0.0/16 \
+        --apiserver-advertise-address=`hostname -I | cut -d' ' -f1` \
+        --kubernetes-version stable-1.32
+  register: kubeadm_init
+  when: not k8s_init_log.stat.exists
+
+- debug: var=k8s_init.stdout
+  when: not k8s_init_log.stat.exists
+
+- name: Wait for k8s to start
+  wait_for:
+    port: 6443
+
+- name: Save install log
+  shell:
+    cmd: echo -e "{{ kubeadm_init.stdout }}" > /etc/kubernetes/kubeadm_init.log
+  when: kubeadm_init.changed

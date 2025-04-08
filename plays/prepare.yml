@@ -1,0 +1,6 @@
+---
+- name: Prepare OS for Kubernetes
+  hosts: k8s
+  become: true
+  roles:
+    - prepare

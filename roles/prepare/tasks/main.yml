@@ -1,0 +1,114 @@
+---
+- include_tasks:
+    file: disable_swap.yml
+    apply:
+      tags:
+        - swap
+  tags:
+    - swap
+
+- include_tasks:
+    file: disable_ipv6.yml
+    apply:
+      tags:
+        - ipv6
+  tags:
+    - ipv6
+
+- include_tasks:
+    file: enable_ipforwarding.yml
+    apply:
+      tags:
+        - ipforwarding
+  tags:
+    - ipforwarding
+
+- include_tasks:
+    file: install_utility_packages.yml
+    apply:
+      tags:
+        - packages
+  tags:
+    - packages
+
+- include_tasks:
+    file: add_k8s_repository.yml
+    apply:
+      tags:
+        - packages
+  tags:
+    - packages
+
+- include_tasks:
+    file: install_k8s_packages.yml
+    apply:
+      tags:
+        - packages
+  tags:
+    - packages
+
+- include_tasks:
+    file: hold_k8s_packages.yml
+    apply:
+      tags:
+        - packages
+  tags:
+    - packages
+
+- include_tasks:
+    file: install_tailscale.yml
+    apply:
+      tags:
+        - tailscale
+  tags:
+    - tailscale
+
+- include_tasks:
+    file: enable_bridge.yml
+    apply:
+      tags:
+        - bridge
+  tags:
+    - bridge
+
+- include_tasks:
+    file: load_br_netfilter.yml
+    apply:
+      tags:
+        - bridge
+  tags:
+    - bridge
+
+- include_tasks:
+    file: setup_containerd.yml
+    apply:
+      tags:
+        - containerd
+  tags:
+    - containerd
+
+- include_tasks:
+    file: iptables.yml
+    apply:
+      tags:
+        - iptables
+  tags:
+    - iptables
+
+- include_tasks:
+    file: iptables_policy.yml
+    apply:
+      tags:
+        - iptables
+  tags:
+    - iptables
+
+- include_tasks:
+    file: ip6tables_policy.yml
+    apply:
+      tags:
+        - iptables
+        - ip6tables
+  tags:
+    - iptables
+    - ip6tables

@@ -1,0 +1,44 @@
+- name: Check if INPUT is open in iptables
+  ansible.builtin.shell:
+    cmd: |
+      iptables -nL INPUT | grep policy | grep ACCEPT | wc -l
+  register: iptables_input_check
+  changed_when: false
+  failed_when: false
+
+- name: Set INPUT policy to ACCEPT
+  when: iptables_input_check.stdout == "0"
+  ansible.builtin.shell:
+    cmd: |
+      iptables -P INPUT ACCEPT
+  register: iptables_input_policy
+
+- name: Check if OUTPUT is open in iptables
+  ansible.builtin.shell:
+    cmd: |
+      iptables -nL OUTPUT | grep policy | grep ACCEPT | wc -l
+  register: iptables_output_check
+  changed_when: false
+  failed_when: false
+
+- name: Set OUTPUT policy to ACCEPT
+  when: iptables_output_check.stdout == "0"
+  ansible.builtin.shell:
+    cmd: |
+      iptables -P OUTPUT ACCEPT
+  register: iptables_output_policy
+
+- name: Check if FORWARD is open in iptables
+  ansible.builtin.shell:
+    cmd: |
+      iptables -nL FORWARD | grep policy | grep ACCEPT | wc -l
+  register: iptables_forward_check
+  changed_when: false
+  failed_when: false
+
+- name: Set FORWARD policy to ACCEPT
+  when: iptables_forward_check.stdout == "0"
+  ansible.builtin.shell:
+    cmd: |
+      iptables -P FORWARD ACCEPT
+  register: iptables_forward_policy

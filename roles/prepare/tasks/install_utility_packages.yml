@@ -1,0 +1,14 @@
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install utility packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - net-tools
+    - iputils-ping
+    - iproute2
+    - git
+  when: ansible_os_family == "Debian"

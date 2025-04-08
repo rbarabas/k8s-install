@@ -1,0 +1,9 @@
+---
+- include_tasks:
+    file: facts.yml
+
+- include_tasks:
+    file: setup.yml
+
+- include_tasks:
+    file: k8s-config.yml

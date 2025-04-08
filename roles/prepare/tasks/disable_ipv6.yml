@@ -1,0 +1,14 @@
+- name: Check if IPv6 is enabled
+  changed_when: off
+  failed_when: off
+  shell:
+    cmd: sysctl net.ipv6.conf.all.disable_ipv6 | grep -c '0'
+  register: ipv6_check
+
+- name: Disable IPv6
+  shell: |-
+    sysctl -w net.ipv6.conf.all.disable_ipv6=1
+    sysctl -w net.ipv6.conf.default.disable_ipv6=1
+    sysctl -w net.ipv6.conf.lo.disable_ipv6=1
+    sysctl -p
+  when: ipv6_check.stdout | int == 1

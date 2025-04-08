@@ -1,0 +1,25 @@
+- name: Run the equivalent of "apt-get update" as a separate step
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install Kubernetes prerequisite packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+    - containerd
+  when: ansible_os_family == "Debian"
+
+- name: Install Kubernetes Packages
+  apt:
+    package:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+    force: true
+  register: k8s_packages

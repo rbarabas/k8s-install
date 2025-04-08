@@ -1,0 +1,13 @@
+- name: Check if tailscale is setup
+  ansible.builtin.shell: tailscale status
+  register: tailscale_status
+  changed_when: off
+  failed_when: off
+
+- name: Download tailscale setup script
+  get_url: url=https://tailscale.com/install.sh dest=/root/tailscale_install.sh mode=755
+  when: tailscale_status.stdout | length == 0
+
+- name: Install tailscale
+  command: /root/tailscale_install.sh
+  when: tailscale_status.stdout | length == 0

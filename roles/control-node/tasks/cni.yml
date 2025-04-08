@@ -1,0 +1,29 @@
+---
+# - name: See if Cilium is installed
+#   failed_when: off
+#   changed_when: off
+#   shell:
+#     cmd: kubectl get deployments.apps -n kube-system Cilium-kube-controllers
+#   register: Cilium_deployment_check
+
+# - debug: var=cni_deployment_check
+
+# - name: Download Cilium CLI
+#   get_url:
+#     url: https://github.com/cilium/cilium-cli/releases/latest/download/cilium-linux-amd64.tar.gz
+#     dest: /root/cilium-linux-amd64.tar.gz
+#     mode: 755
+
+# - name: Install Cilium CLI
+#   ansible.builtin.unarchive:
+#     src: /root/cilium-linux-amd64.tar.gz
+#     dest: /usr/local/bin
+#     remote_src: yes
+#     mode: 755
+
+# - name: Install Cilium
+#   shell:
+#     cmd: cilium install
+
+- name: Flannel
+  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.25.7/Documentation/kube-flannel.yml

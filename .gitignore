@@ -1,2 +1,6 @@
 *.swp
 *.swo
+hosts
+.lock
+.vscode
+hosts

@@ -1,12 +1,22 @@
 ---
-- name: Setup K8s Master
-  become: yes
-  hosts: master
+- name: Setup k8s Control Plane
+  become: true
+  hosts: control[0]
   roles:
-    - init-master
+    - control-node
+  tags:
+    - init-control
 
-- name: Setup K8s Workers
-  become: yes
-  hosts: workers
+- name: Setup k8s Control Plane
+  become: true
+  hosts: control[1:]
   roles:
-    - init-worker
+    - control-node
+  tags:
+    - join-control
+
+- name: Setup k8s Workers
+  become: true
+  hosts: worker
+  roles:
+    - worker-node

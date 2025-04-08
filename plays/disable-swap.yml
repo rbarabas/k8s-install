@@ -1,6 +1,0 @@
----
-- name: Disable swap
-  hosts: k8s
-  become: yes
-  roles:
-    - prepare-os

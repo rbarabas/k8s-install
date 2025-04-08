@@ -1,0 +1,25 @@
+- name: Check if containerd config is in place
+  ansible.builtin.stat:
+    path: /etc/containerd/config.toml
+  register: containerd_config
+
+- debug: var=containerd_config.stat
+  when: containerd_config.stat.exists
+
+- name: Initialize containerd
+  shell:
+    cmd: |
+      mkdir /etc/containerd
+      containerd config default | tee /etc/containerd/config.toml
+      systemctl restart containerd
+  register: containerd_init
+  when: not containerd_config.stat.exists
+
+- name: Switch to using pause 3.10
+  ansible.builtin.replace:
+    path: /etc/containerd/config.toml
+    regexp: 'sandbox_image = "registry.k8s.io/pause:3.8"'
+    replace: 'sandbox_image = "registry.k8s.io/pause:3.10"'
+  when: containerd_init.changed
+  notify:
+    - Restart containerd

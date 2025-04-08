@@ -1,0 +1,44 @@
+- name: Check if INPUT is open in ip6tables
+  ansible.builtin.shell:
+    cmd: |
+      ip6tables -nL INPUT | grep policy | grep ACCEPT | wc -l
+  register: ip6tables_input_check
+  changed_when: false
+  failed_when: false
+
+- name: Set INPUT policy to ACCEPT
+  when: ip6tables_input_check.stdout == "0"
+  ansible.builtin.shell:
+    cmd: |
+      ip6tables -P INPUT ACCEPT
+  register: ip6tables_input_policy
+
+- name: Check if OUTPUT is open in ip6tables
+  ansible.builtin.shell:
+    cmd: |
+      ip6tables -nL OUTPUT | grep policy | grep ACCEPT | wc -l
+  register: ip6tables_output_check
+  changed_when: false
+  failed_when: false
+
+- name: Set OUTPUT policy to ACCEPT
+  when: ip6tables_output_check.stdout == "0"
+  ansible.builtin.shell:
+    cmd: |
+      ip6tables -P OUTPUT ACCEPT
+  register: ip6tables_output_policy
+
+- name: Check if FORWARD is open in ip6tables
+  ansible.builtin.shell:
+    cmd: |
+      ip6tables -nL FORWARD | grep policy | grep ACCEPT | wc -l
+  register: ip6tables_forward_check
+  changed_when: false
+  failed_when: false
+
+- name: Set FORWARD policy to ACCEPT
+  when: ip6tables_forward_check.stdout == "0"
+  ansible.builtin.shell:
+    cmd: |
+      ip6tables -P FORWARD ACCEPT
+  register: ip6tables_forward_policy

@@ -12,6 +12,7 @@
     - curl
     - gnupg
     - containerd
+    - xtables-addons-common
   when: ansible_os_family == "Debian"
 
 - name: Install Kubernetes Packages

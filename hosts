@@ -3,9 +3,9 @@ control
 worker
 
 [control]
-ubuntu@129.153.90.209
-ubuntu@132.226.151.95
-ubuntu@137.131.47.132
+ubuntu@141.148.152.233
+ubuntu@141.148.151.197
+ubuntu@129.153.201.134
 
 [worker]
 #ubuntu@test-k8s-worker1.chocolate-kettle.ts.net
